@@ -11,15 +11,19 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-                echo 'Instalando dependencias...'
-                sh 'npm install -g pnpm'
-                sh 'pnpm install'
+                container('node') {
+                    echo 'Instalando dependencias...'
+                    sh 'npm install -g pnpm'
+                    sh 'pnpm install'
+                }
             }
         }
         stage('Test') {
             steps {
-                echo 'Ejecutando pruebas...'
-                sh 'pnpm run test'
+                container('node') {
+                    echo 'Ejecutando pruebas...'
+                    sh 'pnpm run test'
+                }
             }
         }
         stage('Build') {
